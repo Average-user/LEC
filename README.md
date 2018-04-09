@@ -1,6 +1,6 @@
 # Logic Expressions Converter
 
-A program to convert logic expression into their Conjunctive normal form (CNF) and
+A program to transform logic expressions into their Conjunctive normal form (CNF) and
 Disjunctive Normal Form (DNF) representations.
 
 So far the program works fine with any expression composed by:
@@ -9,6 +9,7 @@ So far the program works fine with any expression composed by:
 |:----------------------|:----------------------:|:--------------|
 | Negation              | !                      | Not           |
 | Conjunction           | &                      | And           |
+| Disjunction           | \|                     | Or            |
 | Implication           | >                      | Implies       |
 | Equality              | =                      | Iff           |
 | Exclusive Disjunction | +                      | Xor           |

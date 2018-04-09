@@ -14,6 +14,7 @@ import Types                (Expr(..), symbol)
 
 main :: IO ()
 main = do
+  putStr "\n"
   quickCheckWith (stdArgs {maxSize = 7, maxSuccess = 500}) testCNF
   quickCheckWith (stdArgs {maxSize = 7, maxSuccess = 500}) testDNF
   hspecWith defaultConfig {configFastFail = True} specs
