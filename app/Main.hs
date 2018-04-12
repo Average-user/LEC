@@ -13,7 +13,8 @@ main = do
   putChunk $ chunk "\nInsert Expression:\n" & fore color
   expr <- parseExpr <$> getLine
   if isNothing expr
-    then putChunk $ chunk "\nNot a valid expression\n\n" & fore red
+    then do putChunk $ chunk "\nNot a valid expression\n\n" & fore red
+            main
     else do let (Just expr') = expr
             putChunk $ chunk "\nParsed Expression:       " & fore color
             putStrLn $(show expr')
