@@ -12,10 +12,10 @@ import Types                              (Expr(..))
 
 parseExpr :: String -> Maybe Expr
 parseExpr exp = if validExpresion exp && isRight parsed
-                  then let Right x = parse expr "blah" exp' in Just x
+                  then let Right x = parsed in Just x
                   else Nothing
   where
-    exp'   = filter (/=' ') exp
+    exp'   = delDoubleNeg $ filter (/=' ') exp
     parsed = parse expr "blah" exp'
 
 expr :: ParsecT String u Identity Expr
@@ -56,12 +56,19 @@ pairedBrackets =
     f (Just (x:xs))       = (x:) <$> f (Just xs)
 
 validVariableNames :: String -> Bool
-validVariableNames xs = all validName names
+validVariableNames xs = all validName ws
   where
-    ws          = words $ (\x -> if x `elem` "()" then ' ' else x) <$> xs
-    variables   = filter (`notElem` ["&","|","!",">","+","="]) ws
-    names       = (\x -> if head x == '!' then tail x else x) <$> variables
-    validName x = head x `elem` (varChars \\ "_") && all (`elem` varChars) x
+    ws          = words $ (\x -> if x `elem` "()!=&|>+" then ' ' else x) <$> xs
+    nonStarting = ['0'..'9'] ++ "_"
+    validName x = head x `elem` (varChars \\ nonStarting) && all (`elem` varChars) x
 
 varChars :: String
 varChars = '_' : ['0'..'9'] ++ ['a'..'z'] ++ ['A'..'Z']
+
+delDoubleNeg :: String -> String
+delDoubleNeg x = if x' == x then x else delDoubleNeg x'
+  where
+    x' = f x
+    f []           = []
+    f ('!':'!':xs) = xs
+    f (x:xs)       = x : f xs
