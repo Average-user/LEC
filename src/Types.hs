@@ -11,8 +11,14 @@ data Expr = Var String
           | Expr :+: Expr deriving Eq
 
 symbol :: Char -> String
-symbol = fromJust . flip lookup [('!',"¬"),   ('|'," ∨ "), ('&'," ∧ "),
-                                 ('>'," → "), ('+'," ⊕ "), ('='," ≡ ")]
+symbol = fromJust . flip lookup
+  [ ('!', "!")
+  , ('|', " | ")
+  , ('&', " & ")
+  , ('>', " > ")
+  , ('+', " + ")
+  , ('=', " = ")
+  ]
 
 instance Show Expr where
   show (Var x)       = x 
