@@ -22,10 +22,11 @@ So far the program works fine with any expression composed by:
     - [x] De Morgan's Law
     - [x] Distributivity
     - [ ] Redundant clauses elimination
-- [ ] Tests
+- [x] Tests
     - [x] Equality between a formula and his (CNF, DNF) conversion
     - [x] Correctness of conversions (CNF, DNF)
 - [ ] Human readable error messages
+- [ ] Benchs
 
 
 Some examples of how does this work:
