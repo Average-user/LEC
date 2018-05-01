@@ -24,7 +24,7 @@ So far the program works fine with any expression composed by:
     - [ ] Redundant clauses elimination
 - [ ] Tests
     - [x] Equality between a formula and his (CNF, DNF) conversion
-    - [ ] Correctness of conversions (CNF, DNF)
+    - [x] Correctness of conversions (CNF, DNF)
 - [ ] Human readable error messages
 
 

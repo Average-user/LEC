@@ -11,6 +11,7 @@ import Test.Hspec           (Spec, describe, it, shouldBe)
 import Test.Hspec.Runner    (configFastFail, defaultConfig, hspecWith)
 import Test.QuickCheck      (Arbitrary(..), quickCheckWith, maxSuccess, maxSize, choose, sized, stdArgs)
 import Types                (Expr(..), symbol)
+import Syntax               (goodCNF, goodDNF)
 
 main :: IO ()
 main = do
@@ -53,10 +54,10 @@ fullImage e = (runReader (eval e) . zip vs) <$> bits (length vs)
         xs = bits (n - 1)
 
 testCNF :: Expr -> Bool
-testCNF = (==) . fullImage <*> fullImage . toCNF
+testCNF = ((&&) . goodCNF . show <*> ((==) . fullImage <*> fullImage)) . toCNF
 
 testDNF :: Expr -> Bool
-testDNF = (==) . fullImage <*> fullImage . toDNF
+testDNF = ((&&) . goodDNF . show <*> ((==) . fullImage <*> fullImage)) . toDNF
 
 instance Arbitrary Expr where
   arbitrary = sized gen

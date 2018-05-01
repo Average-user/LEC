@@ -1,4 +1,4 @@
-module Parser (parseExpr) where
+module Parser (parseExpr, validExpression, varChars) where
 
 import Data.Either                        (isRight)
 import Data.Functor                       (($>))
@@ -11,7 +11,7 @@ import Text.ParserCombinators.Parsec.Expr (Operator(..), Assoc(..), buildExpress
 import Types                              (Expr(..))
 
 parseExpr :: String -> Maybe Expr
-parseExpr exp = if validExpresion exp && isRight parsed
+parseExpr exp = if validExpression exp && isRight parsed
                   then let Right x = parsed in Just x
                   else Nothing
   where
@@ -38,11 +38,11 @@ factor = do { char '(' ; x <- expr ; char ')' ; return x }
    <|> atomP
    <?> "simple expression"
 
-validExpresion :: String -> Bool
-validExpresion = and . sequence [ pairedBrackets
-                                , all (`elem` allowedChars)
-                                , validVariableNames
-                                ]
+validExpression :: String -> Bool
+validExpression = and . sequence [ pairedBrackets
+                                 , all (`elem` allowedChars)
+                                 , validVariableNames
+                                 ]
   where
     allowedChars = varChars ++ "!&|>=+() "
 
