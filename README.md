@@ -31,24 +31,35 @@ So far the program works fine with any expression composed by:
 Some examples of how does this work:
 ```Text
 $ stack exec LEC-exe
-Insert expression:
-!(a | b) & c
 
-Parsed Expression:       ¬(a ∨ b) ∧ c
-Conjunctive Normal Form: ¬a ∧ ¬b ∧ c
-Disjunctive Normal Form: ¬a ∧ ¬b ∧ c
+Insert Expression:
+!(A | B) & C
 
-Insert expression:
-!(a | b) | c
+Parsed Expression:       !(A | B) & C
+Conjunctive normal form: !A & !B & C
+Disjunctive normal form: !A & !B & C
 
-Parsed Expression:       ¬(a ∨ b) ∨ c
-Conjunctive Normal Form: (¬a ∨ c) ∧ (¬b ∨ c)
-Disjunctive Normal Form: (¬a ∧ ¬b) ∨ c
 
-Insert expression:
-a = b
+Insert Expression:
+!(A | B) | C
 
-Parsed Expression:       a ≡ b
-Conjunctive Normal Form: (a ∨ ¬a) ∧ (a ∨ ¬b) ∧ (b ∨ ¬a) ∧ (b ∨ ¬b)
-Disjunctive Normal Form: (a ∧ b) ∨ (¬a ∧ ¬b)
+Parsed Expression:       !(A | B) | C
+Conjunctive normal form: (!A | C) & (!B | C)
+Disjunctive normal form: (!A & !B) | C
+
+
+Insert Expression:
+(A = B)
+
+Parsed Expression:       A = B
+Conjunctive normal form: (A | !A) & (A | !B) & (B | !A) & (B | !B)
+Disjunctive normal form: (A & B) | (!A & !B)
+
+
+Insert Expression:
+(A = B) > C
+
+Parsed Expression:       (A = B) > C
+Conjunctive normal form: (!A | !B | C) & (A | B | C)
+Disjunctive normal form: (!A & A) | (!A & B) | (!B & A) | (!B & B) | C
 ```
